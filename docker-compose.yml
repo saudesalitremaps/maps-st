@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: maps_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: maps_user
+      POSTGRES_PASSWORD: maps_senha
+      POSTGRES_DB: maps_db
+    ports:
+      - "0.0.0.0:5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB -h 127.0.0.1 -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rede_certidoes
+
+volumes:
+  postgres_data:
+
+networks:
+  rede_certidoes:
+    driver: bridge

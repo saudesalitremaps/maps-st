@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model UBS {
+  id          String       @id @default(cuid())
+  nome        String
+  endereco    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  enfermeiros Enfermeiro[]
+  gestantes   Gestante[]
+}
+
+model Enfermeiro {
+  id        String   @id @default(cuid())
+  nome      String
+  email     String   @unique
+  senha     String // Hash da senha
+  isAdmin   Boolean  @default(false) // Indica se é administrador
+  ubsId     String?
+  ubs       UBS?     @relation(fields: [ubsId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  gestantesExcluidas GestanteExcluida[] // Relação com gestantes excluídas
+}
+
+model Gestante {
+  id                  String   @id @default(cuid())
+  nome                String
+  dataNascimento      DateTime?
+  cartaoSus           String   @unique // Cartão do SUS (obrigatório e único)
+  telefone            String?  // Telefone de contato (DDD + número)
+  ubsId               String // UBS à qual a gestante pertence
+  ubs                 UBS      @relation(fields: [ubsId], references: [id], onDelete: Cascade)
+  dum                 DateTime // Data da Última Menstruação
+  dpp                 DateTime // Data Provável do Parto (calculada)
+  semanasInicioPreNatal Int    // Idade gestacional (em semanas) no início do pré-natal
+  etnia               String // Branco, Preto, Pardo, Indígena, Amarelo
+  gestacoesAnteriores Int      @default(0)
+  risco               String // Risco Baixo, Risco Intermediário, Risco Alto
+  descricaoRisco      String? // Para risco intermediário
+  motivoAltoRisco     String? // Para risco alto (obrigatório)
+
+  // Exames de Rotina
+  exameRotina1Trimestre Boolean @default(false)
+  exameRotina2Trimestre Boolean @default(false)
+  exameRotina3Trimestre Boolean @default(false)
+
+  // Ultrassonografia
+  ultrassom1Trimestre Boolean @default(false)
+  ultrassom2Trimestre Boolean @default(false)
+  ultrassom3Trimestre Boolean @default(false)
+
+  // Vacinas
+  vacinaHB               Boolean @default(false)
+  vacinaDT               Boolean @default(false)
+  vacinaInfluenza        Boolean @default(false)
+  vacinaCovid19          Boolean @default(false)
+  vacinaDTPA20Semana     Boolean @default(false)
+  vacinaVSR28Semana      Boolean @default(false)
+
+  // Planilha de monitoramento municipal
+  testesRapidos1Trimestre Boolean @default(false)
+  testesRapidos3Trimestre Boolean @default(false)
+  numeroConsultas         Int     @default(0)
+  planoDeCuidados         Boolean @default(false)
+  gestaoDeCaso            Boolean @default(false)
+  vinculadaMaternidade    Boolean @default(false)
+  nomeMaternidade         String?
+  destinoAAE              String? // Policlínica | Ambulatório Municipal
+  statusAAE               String  @default("nao_encaminhada") // nao_encaminhada | aguardando_vaga | compartilhada
+  dataEncaminhamentoAAE   DateTime?
+  dataAcessoAAE           DateTime?
+  desfecho                String  @default("em_andamento") // em_andamento | nascido | obito_fetal | obito_infantil | obito_materno
+  dataDesfecho            DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GestanteExcluida {
+  id                  String   @id @default(cuid())
+  // Dados da gestante excluída
+  nome                String
+  dataNascimento      DateTime?
+  cartaoSus           String
+  telefone            String?
+  ubsId               String
+  dum                 DateTime
+  dpp                 DateTime
+  semanasInicioPreNatal Int
+  etnia               String
+  gestacoesAnteriores Int
+  risco               String
+  descricaoRisco      String?
+  motivoAltoRisco     String?
+
+  // Exames de Rotina
+  exameRotina1Trimestre Boolean
+  exameRotina2Trimestre Boolean
+  exameRotina3Trimestre Boolean
+
+  // Ultrassonografia
+  ultrassom1Trimestre Boolean
+  ultrassom2Trimestre Boolean
+  ultrassom3Trimestre Boolean
+
+  // Vacinas
+  vacinaHB               Boolean
+  vacinaDT               Boolean
+  vacinaInfluenza        Boolean
+  vacinaCovid19          Boolean
+  vacinaDTPA20Semana     Boolean
+  vacinaVSR28Semana      Boolean
+
+  testesRapidos1Trimestre Boolean @default(false)
+  testesRapidos3Trimestre Boolean @default(false)
+  numeroConsultas         Int     @default(0)
+  planoDeCuidados         Boolean @default(false)
+  gestaoDeCaso            Boolean @default(false)
+  vinculadaMaternidade    Boolean @default(false)
+  nomeMaternidade         String?
+  destinoAAE              String?
+  statusAAE               String  @default("nao_encaminhada")
+  dataEncaminhamentoAAE   DateTime?
+  dataAcessoAAE           DateTime?
+  desfecho                String  @default("em_andamento")
+  dataDesfecho            DateTime?
+
+  // Informações sobre a exclusão
+  enfermeiroId        String? // ID do enfermeiro que excluiu (null se foi exclusão automática)
+  enfermeiro          Enfermeiro? @relation(fields: [enfermeiroId], references: [id], onDelete: SetNull)
+  motivoExclusao      String   @default("manual") // "manual" ou "automatica"
+  dataExclusao        DateTime @default(now())
+
+  // Datas originais de criação e atualização
+  createdAtOriginal   DateTime
+  updatedAtOriginal   DateTime
+}
+
+model IndicadorMunicipal {
+  id                 String   @id @default(cuid())
+  ano                Int      @unique
+  gestantesEstimadas Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
