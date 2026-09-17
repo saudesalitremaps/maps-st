@@ -333,35 +333,35 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="border-none bg-cyan-50 shadow-sm">
+        <Card className="border-none bg-pink-50 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-cyan-900">
+            <CardTitle className="text-sm font-medium text-pink-900">
               Partos Este Mês
             </CardTitle>
-            <Baby className="h-4 w-4 text-cyan-600" />
+            <Baby className="h-4 w-4 text-[#EC008C]" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-cyan-700">
+            <div className="text-3xl font-bold text-[#EC008C]">
               {stats.partosEsteMes}
             </div>
-            <p className="text-xs text-cyan-800 mt-1">
+            <p className="text-xs text-pink-800 mt-1">
               DPP previsto para este mês
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-none bg-pink-50 shadow-sm">
+        <Card className="border-none bg-cyan-50 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-pink-900">
+            <CardTitle className="text-sm font-medium text-cyan-900">
               Partos nos últimos 3 meses
             </CardTitle>
-            <Check className="h-4 w-4 text-[#EC008C]" />
+            <Check className="h-4 w-4 text-cyan-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-[#EC008C]">
+            <div className="text-3xl font-bold text-cyan-700">
               {stats.partosDosUltimos3Meses}
             </div>
-            <p className="text-xs text-pink-800 mt-1">
+            <p className="text-xs text-cyan-800 mt-1">
               Partos concluídos nos últimos 3 meses
             </p>
           </CardContent>

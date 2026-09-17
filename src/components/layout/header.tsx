@@ -49,7 +49,6 @@ export function Header() {
 
   return (
     <header className={`w-full ${municipio.headerGradient} shadow-md`}>
-      <div className="h-1 w-full bg-[#EC008C]" />
       <div className="container px-4 py-3 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3 min-w-0">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 shadow-sm">

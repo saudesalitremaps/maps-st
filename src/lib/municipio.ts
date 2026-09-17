@@ -21,13 +21,14 @@ const SALITRE: MunicipioConfig = {
   uf: "CE",
   aps: "APS Salitre",
   descricao: "Monitoramento da Atenção Primária em Saúde — Salitre",
-  headerGradient: "bg-gradient-to-r from-[#EC008C] via-emerald-700 to-cyan-500",
-  headerSubtitle: "text-pink-100/95",
-  headerSessionLabel: "text-pink-100/80",
-  loginPageBg: "bg-gradient-to-br from-emerald-50 via-pink-50 to-cyan-50",
-  loginCard: "border-pink-200",
-  loginIcon: "bg-gradient-to-br from-[#EC008C] via-emerald-600 to-cyan-500",
-  loginTitle: "text-[#EC008C]",
+  headerGradient:
+    "bg-[linear-gradient(90deg,#047857_25%,#DC2626_45%,#EC008C_60%,#06B6D4_100%)]",
+  headerSubtitle: "text-emerald-50/95",
+  headerSessionLabel: "text-emerald-100/85",
+  loginPageBg: "bg-gradient-to-br from-emerald-50 via-red-50 to-cyan-50",
+  loginCard: "border-emerald-200",
+  loginIcon: "bg-gradient-to-br from-[#EC008C] via-emerald-600 to-cyan-500",  
+  loginTitle: "text-emerald-800",
 }
 
 export function getMunicipio(): MunicipioConfig {

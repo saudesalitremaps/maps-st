@@ -457,11 +457,11 @@ export default function RelatoriosPage() {
                     <p className="text-xl font-bold text-amber-600 dark:text-amber-400">{relatorio.resumo.prontuariosAtualizados}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
-                  <Baby className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
+                <div className="flex items-center gap-3 p-4 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800">
+                  <Baby className="h-7 w-7 text-red-600 dark:text-red-400" />
                   <div>
-                    <p className="text-xs font-medium text-emerald-800 dark:text-emerald-200">Partos no Mês</p>
-                    <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{relatorio.resumo.partosNoMes}</p>
+                    <p className="text-xs font-medium text-red-800 dark:text-red-200">Partos no Mês</p>
+                    <p className="text-xl font-bold text-red-600 dark:text-red-400">{relatorio.resumo.partosNoMes}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 rounded-lg bg-pink-50 dark:bg-pink-950/30 border border-pink-200 dark:border-pink-800">
