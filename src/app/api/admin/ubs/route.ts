@@ -44,3 +44,30 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function POST(request: NextRequest) {
+  const authError = await requireAdmin(request)
+  if (authError) return authError
+
+  try {
+    const body = await request.json()
+    const nome = String(body.nome || "").trim()
+    const endereco = String(body.endereco || "").trim()
+
+    if (!nome || !endereco) {
+      return NextResponse.json(
+        { error: "Informe o nome e o endereço da UBS." },
+        { status: 400 }
+      )
+    }
+
+    const ubs = await prisma.uBS.create({
+      data: { nome, endereco },
+    })
+
+    return NextResponse.json(ubs, { status: 201 })
+  } catch (error) {
+    console.error("Erro ao criar UBS:", error)
+    return NextResponse.json({ error: "Erro ao criar UBS" }, { status: 500 })
+  }
+}
+

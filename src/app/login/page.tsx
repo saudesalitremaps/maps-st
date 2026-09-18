@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
+import {PasswordInput} from "@/components/ui/password-input"
 import { Activity } from "lucide-react"
 import { getMunicipio } from "@/lib/municipio"
 
@@ -75,15 +76,7 @@ export default function LoginPage() {
 
           <div className="space-y-2">
             <Label htmlFor="senha">Senha</Label>
-            <Input
-              id="senha"
-              type="password"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-              autoComplete="current-password"
-              placeholder="••••••••"
-            />
+            <PasswordInput value={senha} onChange={(e) => setSenha(e.target.value)} />
           </div>
 
           {erro && (
