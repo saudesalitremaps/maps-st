@@ -47,13 +47,14 @@ export function setSession(session: typeof adminSession | typeof nurseSession | 
 }
 
 export function apiRequest(path: string, init?: RequestInit & { body?: unknown }) {
-  const { body, headers, ...rest } = init ?? {}
+  const { body, headers, signal, ...rest } = init ?? {}
   const serialized = body === undefined || typeof body === "string" || body instanceof FormData
     ? body
     : JSON.stringify(body)
 
   return new NextRequest(new URL(path, "http://localhost:3000"), {
     ...rest,
+    signal: signal ?? undefined,
     headers: {
       ...(serialized && typeof serialized === "string" ? { "content-type": "application/json" } : {}),
       ...(headers as Record<string, string> | undefined),
